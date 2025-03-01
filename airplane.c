@@ -51,10 +51,9 @@ void displaySeats(char seats[ROWS][COLS])
         printf("|\n");
     }
     printf("   --------------------------\n");
-    printf("     A B   C D\n"); // Column labels
+    printf("     A B   C D\n");
 }
 
-// Function to save the seat status to a file
 void saveSeatsToFile(char seats[ROWS][COLS])
 {
     FILE *file = fopen("seats.txt", "w");
@@ -76,7 +75,6 @@ void saveSeatsToFile(char seats[ROWS][COLS])
     fclose(file);
 }
 
-// Function to load the seat status from a file
 void loadSeatsFromFile(char seats[ROWS][COLS])
 {
     FILE *file = fopen("seats.txt", "r");
@@ -103,14 +101,12 @@ void loadSeatsFromFile(char seats[ROWS][COLS])
     fclose(file);
 }
 
-// Function to generate a random ticket number
 int generateTicketNumber()
 {
-    srand(time(0)); // Seed the random number generator
+    srand(time(0));                  // Seed the random number generator
     return rand() % 900000 + 100000; // Generate a 6-digit ticket number
 }
 
-// Function to display the ticket
 void displayTicket(int ticketNumber, char seats[ROWS][COLS], char *seatList)
 {
     clearScreen();
@@ -125,7 +121,6 @@ void displayTicket(int ticketNumber, char seats[ROWS][COLS], char *seatList)
     printf("\nThank you for choosing our airline!\n");
 }
 
-// Function to ask the user if they want to return to the menu
 int askToReturnToMenu()
 {
     char choice;
@@ -134,8 +129,7 @@ int askToReturnToMenu()
     return (tolower(choice) == 'y');
 }
 
-// Function to book multiple seats
-void bookMultipleSeats(char seats[ROWS][COLS])
+void bookSeats(char seats[ROWS][COLS])
 {
     char input[100];
     printf("Enter the seats you want to book (e.g., 1A 2B 3C): ");
@@ -155,7 +149,6 @@ void bookMultipleSeats(char seats[ROWS][COLS])
             // Convert column character to index (A=0, B=1, C=2, D=3)
             int col = toupper(colChar) - 'A';
 
-            // Validate the seat selection
             if (row < 1 || row > ROWS || col < 0 || col >= COLS)
             {
                 printf("Invalid seat selection: %s. Skipping.\n", token);
@@ -182,9 +175,9 @@ void bookMultipleSeats(char seats[ROWS][COLS])
 
     if (booked > 0)
     {
-        saveSeatsToFile(seats); // Save updated seat status to file
+        saveSeatsToFile(seats);
         int ticketNumber = generateTicketNumber();
-        displayTicket(ticketNumber, seats, seatList); // Display the ticket
+        displayTicket(ticketNumber, seats, seatList);
 
         if (askToReturnToMenu())
         {
@@ -240,7 +233,7 @@ int main()
         case 2:
             clearScreen();
             displaySeats(seats);
-            bookMultipleSeats(seats);
+            bookSeats(seats);
             break;
 
         case 3:
